@@ -1,6 +1,7 @@
 <%- include('layouts/header.ejs') %>
+<%- include('layouts/nav.ejs') %>
 <div class="row mt-2">
-    <div class="col-4">
+    <div class="col-12 col-lg-4">
         <ul class="list-group">
             <li class="list-group-item"><h4 class="fs-3"><%=  user.name %></h4></li>
             <li class="list-group-item"><h4 class="fs-5"><%= user.email%></h4></li>
@@ -31,7 +32,7 @@
             </li>
         </ul>
     </div>
-    <div class="col-8 p-2">
+    <div class="col-12 col-lg-8 p-2">
         <h3 class="dispaly-4 text-secondary ">My Posts ...</h3>
         <% if(articles.length>0){
             articles.forEach((article)=>{

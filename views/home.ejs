@@ -1,4 +1,5 @@
 <%- include('layouts/header.ejs') %>
+<%- include('layouts/nav.ejs') %>
 <%
 const hour=new Date().getHours();
 let greeting;
@@ -24,14 +25,14 @@ if(hour>=0 && hour<12){
 </style>
 <div class="">
     <div class="row mt-2">
-        <div class="col-lg-3">
+        <div class="d-none d-lg-block  col-lg-3">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title text-secondary"><span class="gret"  ><%= greeting %></span> <%= user.name %>!</h4>
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-12 col-lg-6">
             <div class="row">
                 <div class="card">
                     <form action="/article" method="post" enctype="multipart/form-data">
