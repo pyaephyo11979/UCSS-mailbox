@@ -16,15 +16,18 @@ if(hour>=0 && hour<12){
     color="black"
 }
 %>
+<style>
+    .gret{
+        color:<%= color%>; 
+        text-shadow: 2px 2px 4px #000000;
+    }
+</style>
 <div class="">
     <div class="row mt-2">
         <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-secondary"><span class="gret" style="color:<%= color%>;" ><%= greeting %></span> <%= user.name %>!</h4>
-                </div>
-                <div class="card-footer">
-                    <a href="/profileManage" class="btn btn-info ">Manage Profile <i class="fas fa-tools"></i></a>
+                    <h4 class="card-title text-secondary"><span class="gret"  ><%= greeting %></span> <%= user.name %>!</h4>
                 </div>
             </div>
         </div>
@@ -34,13 +37,10 @@ if(hour>=0 && hour<12){
                     <form action="/article" method="post" enctype="multipart/form-data">
                     <div class="card-body">
                             <input type="hidden" name="userID" class="mt-1" value="<%= user.StudentID %>">
-                            <textarea name="content" id="" class="form-control mt-1" cols="75" rows="10"></textarea>
+                            <textarea name="content" id="" class="form-control mt-1" cols="75" rows="5"></textarea>
                             <div class="row mt-1 g-2">
                                 <div class="col-4">
                                     <input type="file" name="image" class="form-control" id="photo">
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control" name="category" placeholder="Enter Category(Optional)">
                                 </div>
                                 <div class="col-4">
                                     <select name="tag" id="" class="form-select">
@@ -54,12 +54,14 @@ if(hour>=0 && hour<12){
                             </div>
                     </div>
                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Post</button>
+                        <div class="row">
+                            <button type="submit" class="btn  btn-primary">Post <i class="fas fa"></i> </button>
+                        </div>
                     </div>
                     </form>
                 </div>
             </div>
-            <div class="container-fluid d-flex flex-column   mt-2">
+            <div class=" d-flex flex-column   mt-2">
                 <% if(articles.length>0) {
                     articles.forEach((article)=>{
                 %>
@@ -142,11 +144,6 @@ if(hour>=0 && hour<12){
     </div>
 </div>
 <script>
-  const cmtBtn=document.querySelector('#cmtBtn');
-    const cmtArea=document.querySelector('#cmtArea');
-    cmtArea.style.display='none';
-    cmtBtn.addEventListener('click',()=>{
-        cmtArea.style.display='block';
-    })
+
 </script>
 <%- include('layouts/footer.ejs') %>

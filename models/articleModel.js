@@ -12,9 +12,6 @@ const articleSchema = mongoose.Schema({
         type:String,
 
     },
-    category:{
-        type:String,
-    },
     tag:{
         type:String,
     },

@@ -12,14 +12,21 @@ const registerLoad= async (req,res)=>{
 const register = async (req,res)=>{
     try{
         const paswordHesh=bcrypt.hashSync(req.body.password,10);
-        const user= new User({
-             name:req.body.name,
-             StudentID:req.body.StudentID,
-             email:req.body.email,
-             password:paswordHesh,
-         })
-         await user.save();
-         res.render('signup',{message:'Register successfully'});
+        const email=req.body.email;
+        const alreadyIncluded=await User.findOne({email:email});
+        if(alreadyIncluded){
+            res.render('signup',{message:'Email already registered!, Please login'});
+        }else{
+            const user= new User({
+                name:req.body.name,
+                StudentID:req.body.StudentID,
+                email:req.body.email,
+                password:paswordHesh,
+            })
+            await user.save();
+            res.render('signup',{message:'Register successfully'});
+        }
+      
     }catch(err){
         console.log(err);
     }
@@ -82,7 +89,6 @@ const article= async (req,res)=>{
             const article=new Article({
                 content:req.body.content,
                 userID:req.body.userID,
-                category:'General',
                 tag:'General',
                 likes:0,
             })
@@ -93,8 +99,7 @@ const article= async (req,res)=>{
             content:req.body.content,
             userID:req.body.userID,
             image:'images/'+req.file.filename,
-            category:req.body.category,
-            tag:req.body.tags,
+            tag:req.body.tag,
             likes:0,
         })
         await article.save();
