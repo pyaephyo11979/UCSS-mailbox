@@ -1,0 +1,76 @@
+<%- include('layouts/header.ejs') %>
+<div class="row mt-2">
+    <div class="col-4">
+        <ul class="list-group">
+            <li class="list-group-item"><h4 class="fs-3"><%=  user.name %></h4></li>
+            <li class="list-group-item"><h4 class="fs-5"><%= user.email%></h4></li>
+            <li class="list-group-item">
+                <a style="cursor:pointer;" id="pswChangeBtn" class="text-decoration-none text-info">ChangePassword</a>
+            </li>
+            <li class="list-group-item" id="passwordChangeForm">
+                <form action="/changePassword" method="post">
+                    <div class="form-floating">
+                        <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="Old Password">
+                        <label for="">Enter Current Password</label>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="New Password">
+                        <label for="">Enter New Password</label>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password">
+                        <label for="">Confirm</label>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-success">Change Password</button>
+                    </div>
+                </form>
+            </li>
+            <li class="list-group-item">
+                <a href="/logout" class="text-decoration-none text-danger ">Logout</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-8 p-2">
+        <h3 class="dispaly-4 text-secondary ">My Posts ...</h3>
+        <% if(articles.length>0){
+            articles.forEach((article)=>{
+             %>
+        <div class="card mt-2">
+            <div class="card-header">
+                <h4 class="card-title"><%= user.name %></h4>
+                <form action="/delete" method="post">
+                    <input type="hidden" name="articleID" value="<%= article._id %>">
+                    <button type="submit" class="btn btn-danger float-end"><i class="fas fa-trash"></i></button>
+                </form>
+            </div>
+            <div class="card-body">
+                <p class="card-text">
+                    <%= article.content %>
+                </p>
+                <% if(article.image){ %>
+                <img src="<%= article.image %>" alt="" class="img-fluid">
+                <% } %>
+                <div class="row">
+                    <div class="col-6">
+                        <p class="card-text"><small class="text-muted">Category: <%= article.category %></small></p>
+                    </div>
+                    <div class="col-6">
+                        <p class="card-text"><small class="text-muted">Tag: <%= article.tag %></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+             <%})}%>
+    </div>
+</div>
+<script>
+
+    $(document).ready(function(){
+        $("#passwordChangeForm").hide();
+        $("#pswChangeBtn").click(function(){
+            $("#passwordChangeForm").toggle();
+        });
+    });
+</script>
+<%-include('layouts/footer.ejs')%>

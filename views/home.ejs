@@ -1,0 +1,152 @@
+<%- include('layouts/header.ejs') %>
+<%
+const hour=new Date().getHours();
+let greeting;
+if(hour>=0 && hour<12){
+    greeting="Good Morning";
+    color="yellow"
+}else if(hour>=12 && hour<16){
+    greeting="Good Afternoon";
+    color="orange"
+}else if(hour>=16 && hour<20){
+    greeting="Good Evening";
+    color="darkblue"
+}else{
+    greeting="Good Night";
+    color="black"
+}
+%>
+<div class="">
+    <div class="row mt-2">
+        <div class="col-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-secondary"><span class="gret" style="color:<%= color%>;" ><%= greeting %></span> <%= user.name %>!</h4>
+                </div>
+                <div class="card-footer">
+                    <a href="/profileManage" class="btn btn-info ">Manage Profile <i class="fas fa-tools"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="row">
+                <div class="card">
+                    <form action="/article" method="post" enctype="multipart/form-data">
+                    <div class="card-body">
+                            <input type="hidden" name="userID" class="mt-1" value="<%= user.StudentID %>">
+                            <textarea name="content" id="" class="form-control mt-1" cols="75" rows="10"></textarea>
+                            <div class="row mt-1 g-2">
+                                <div class="col-4">
+                                    <input type="file" name="image" class="form-control" id="photo">
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" class="form-control" name="category" placeholder="Enter Category(Optional)">
+                                </div>
+                                <div class="col-4">
+                                    <select name="tag" id="" class="form-select">
+                                        <option value="General">General</option>
+                                        <option value="Academic">Academic</option>
+                                        <option value="Sports">Sports</option>
+                                        <option value="Report">Report</option>
+                                        <option value="Others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="container-fluid d-flex flex-column   mt-2">
+                <% if(articles.length>0) {
+                    articles.forEach((article)=>{
+                %>
+                <div class="card mt-2">
+                    <div class="card-header">
+                        <h4 class="card-title">Anonymous</h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><%= article.content %></p>
+                        <% if(article.image){ %>
+                        <img src="<%= article.image %>" alt="" class="img-fluid">
+                        <% } %>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="card-text"><small class="text-muted">Category: <%= article.category %></small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="card-text"><small class="text-muted">Tag: <%= article.tag %></small></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="card-text"><small class="">Likes <%= article.likes.length %></small></p>
+                            </div>
+                            <div class="col-6">
+                                <p class="card-text"><small class="">Comments <%= article.comments %></small></p>
+                            </div>
+                        </div>
+                        <div class="row" id="cmtArea"> 
+                            <div class="row" id="cmts">
+                                <% if(article.comments.length>0){
+                                    article.comments.forEach((comment)=>{
+                                %>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="fs-4">
+                                            <%= comment.comment %>
+                                        </p>
+                                    </div>
+                                </div>
+                                <%})}%>
+                            </div>
+                            <div class="row">
+                                <form action="/comment" method="post" id="cmtForm" class="d-none">
+                                    <input type="hidden" name="articleID" value="<%= article._id %>">
+                                    <input type="hidden" name="userID" value="<%= user.StudentID %>">
+                                    <textarea name="comment" id="" cols="30" rows="2" class="form-control mt-2"></textarea>
+                                    <button type="submit" class="btn btn-primary mt-2">Comment</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <form action="/like" method="post">
+                                    <input type="hidden" name="articleID" value="<%= article._id %>">
+                                    <input type="hidden" name="userID" value="<%= user._id %>">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-thumbs-up"></i> Like</button>
+                                </form>
+                            </div>
+                            <div class="col-6">
+                                <button  class="btn btn-primary" id="cmtBtn"><i class="fas fa-comment"></i> Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                   <% });
+                }%>
+            </div>
+        </div>
+        <div class="d-none d-lg-block col-lg-3">
+            <form action="/search" class="mt-2 rounded-4">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control rounded-start-4" placeholder="Search">
+                    <button type="submit" class="btn btn-primary input-group-text rounded-end-4 "><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+  const cmtBtn=document.querySelector('#cmtBtn');
+    const cmtArea=document.querySelector('#cmtArea');
+    cmtArea.style.display='none';
+    cmtBtn.addEventListener('click',()=>{
+        cmtArea.style.display='block';
+    })
+</script>
+<%- include('layouts/footer.ejs') %>

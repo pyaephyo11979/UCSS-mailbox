@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.css" integrity="sha512-r0fo0kMK8myZfuKWk9b6yY8azUnHCPhgNz/uWDl2rtMdWJlk7gmd9socvGZdZzICwAkMgfTkVrplDahQ07Gi0A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.css" integrity="sha512-KOWhIs2d8WrPgR4lTaFgxI35LLOp5PRki/DxQvb7mlP29YZ5iJ5v8tiLWF7JLk5nDBlgPP1gHzw96cZ77oD7zQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="css/style.css">
+<div class="container-fluid">
+<div class="row" style="margin-top: 10%; padding: 10px;">
+    <div class="col-12 col-lg-6 mt-2">
+        <div class="row">
+            <div class="col-3">
+                <img src="images/Logo.png" width="200px" height="100px" alt="UCSSMailBox" class="logo img-fluid">
+            </div>
+            <div class="col-9">
+               <h1 class="display-6 text-secondary " style="font-family: 'Times New Roman', Times, serif;">Welcome form UCSS Mailbox,<br>Enter Informations to Register</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-lg-6 mt-2">
+        <div class="card">
+            <form action="/register" method="post">
+            <div class="card-body">
+                <% if(typeof message !== 'undefined')  {%>
+                <h4 class="text-center text-success mt-2 " >
+                    <%= message %>
+                </h4>
+                <% } %>
+                    <div class="form-floating ">
+                        <input type="text" class="form-control" name="name" id="floatingInput" placeholder="" required>
+                        <label for="floatingInput">Enter Name</label>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="text" class="form-control" name="StudentID" id="floatingInput" placeholder="" required>
+                        <label for="floatingInput">Enter Student ID</label>
+                    </div>
+                    <div class="form-floating mt-1 ">
+                        <input type="email" class="form-control" name="email" id="floatingInput" placeholder="" required>
+                        <label for="floatingInput">Enter Email</label>
+                    </div>
+                    <div class="form-floating mt-1">
+                        <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="" required>
+                        <label for="floatingPassword">Enter Password</label>
+                    </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Signup</button>
+            </div>
+            </form>
+        </div>
+        <div class="mt-1 text-center">
+            <p>Already have an Account <a href="/login">Login Here</a></p>
+        </div>
+    </div>
+</div>
+</div>
