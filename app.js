@@ -12,6 +12,12 @@ const userRoute = require('./routes/userRoute');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use((req,res,next)=>{
+    res.setHeader('Access-Control-Allow-Origin','*');
+    res.setHeader('Access-Control-Allow-Methods','*');
+    res.setHeader('Access-Control-Allow-Methods','*');
+    next();
+})
 app.use('/', userRoute);
 const http= require('http');
 const server = http.createServer(app);
