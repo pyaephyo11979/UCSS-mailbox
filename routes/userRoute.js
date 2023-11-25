@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const fileupload = require('express-fileupload');
+
 const { SESSION_SECRET } = process.env ;
 const user_route = express();
 user_route.use(session({ secret: SESSION_SECRET }));
