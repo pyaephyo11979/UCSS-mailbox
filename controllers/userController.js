@@ -177,6 +177,35 @@ const manageProfile= async (req,res)=>{
         console.log(err);
     }
 }
+const changePasswordLoad= async (req,res)=>{
+    try{}catch(err){
+        console.log(err);
+    }
+}
+const changePassword= async (req,res)=>{
+    try{
+        const {oldPassword,newPassword,confirmPassword}=req.body;
+        const userID=req.session.user._id;
+        const userData=await User.findOne({_id:userID});
+        const passMatch= bcrypt.compareSync(oldPassword,userData.password);
+        if(passMatch){
+            if(newPassword===confirmPassword){
+                const paswordHesh=bcrypt.hashSync(newPassword,10);
+                await User.findOneAndUpdate({_id:userID},{password:paswordHesh});
+                res.render('manageProfile',{message:'Password changed successfully',user:req.session.user});
+            }else{
+                res.render('manageProfile',{message:'Password does not match!',user:req.session.user});
+            }
+        }
+        else{
+            res.render('manageProfile',{message:'Wrong Pasword!'});
+        }
+
+    }catch(err){
+        console.log(err);
+    }
+
+}
 module.exports={
     registerLoad,
     register,
@@ -190,5 +219,7 @@ module.exports={
     comment,
     deleteArticle,
     manageProfileLoad,
-    manageProfile
+    manageProfile,
+    changePasswordLoad,
+    changePassword,
 }

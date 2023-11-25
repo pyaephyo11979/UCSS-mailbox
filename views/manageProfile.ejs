@@ -9,6 +9,9 @@
                 <a style="cursor:pointer;" id="pswChangeBtn" class="text-decoration-none text-info">ChangePassword</a>
             </li>
             <li class="list-group-item" id="passwordChangeForm">
+                <% if(typeof message!== 'undefined') { %>
+                <div class="alert alert-warining"><%= message %></div>
+                <% } %>
                 <form action="/changePassword" method="post">
                     <div class="form-floating">
                         <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="Old Password">
@@ -20,7 +23,7 @@
                     </div>
                     <div class="form-floating mt-1">
                         <input type="password" name="confirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password">
-                        <label for="">Confirm</label>
+                        <label for="">Confirm New Password</label>
                     </div>
                     <div class="mt-2">
                         <button type="submit" class="btn btn-success">Change Password</button>
@@ -50,7 +53,8 @@
                     <%= article.content %>
                 </p>
                 <% if(article.image){ %>
-                <img src="<%= article.image %>" alt="" class="img-fluid">
+                    <img src="data:image/<%=article.image.contentType%>;base64,
+                    <%=article.image.data.toString('base64')%>" alt="" class="img-fluid">
                 <% } %>
                 <div class="row">
                     <div class="col-6">

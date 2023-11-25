@@ -38,6 +38,7 @@ user_route.post('/like',auth.isLogout, userController.like);
 user_route.post('/comment',auth.isLogout, userController.comment);
 user_route.get('/profileManage',auth.isLogin, userController.manageProfileLoad);
 user_route.post('/delete',auth.isLogin, userController.deleteArticle);
+user_route.post('/changePassword',auth.isLogin, userController.changePassword);
 user_route.get('*',(req,res)=>{
     res.redirect('/login')
 })
