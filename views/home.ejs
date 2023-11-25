@@ -73,7 +73,8 @@ if(hour>=0 && hour<12){
                     <div class="card-body">
                         <p class="card-text"><%= article.content %></p>
                         <% if(article.image){ %>
-                        <img src="<%= article.image %>" alt="" class="img-fluid">
+                        <img src="data:image/<%=article.image.contentType%>;base64,
+                        <%=article.image.data.toString('base64')%>" alt="" class="img-fluid">
                         <% } %>
                         <div class="row">
                             <div class="col-6">

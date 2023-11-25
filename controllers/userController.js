@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
+const fs = require('fs');
 const User = require('../models/userModel');
 const Article = require('../models/articleModel');
 const registerLoad= async (req,res)=>{
@@ -25,6 +26,7 @@ const register = async (req,res)=>{
             })
             await user.save();
             res.render('signup',{message:'Register successfully'});
+            res.redirect('/login');
         }
       
     }catch(err){
@@ -95,15 +97,19 @@ const article= async (req,res)=>{
             await article.save();
             res.redirect('/home');
         }else{
-        const article=new Article({
-            content:req.body.content,
-            userID:req.body.userID,
-            image:'images/'+req.file.filename,
-            tag:req.body.tag,
-            likes:0,
-        })
-        await article.save();
-        res.redirect('/home');
+            const article=new Article({
+                content:req.body.content,
+                userID:req.body.userID,
+                image:{
+                    data:fs.readFileSync('public/images/'+req.file.filename),
+                    contentType:'image'
+                },
+                tag:req.body.tag,
+                likes:0,
+                comments:0
+            })
+            await article.save();
+            res.redirect('/home');
     }
     }catch(err){
         console.log(err);
