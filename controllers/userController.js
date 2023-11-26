@@ -48,9 +48,7 @@ try{
         const passMatch= bcrypt.compareSync(password,userData.password);
         if(passMatch){
             req.session.user=userData;
-            const articles=await Article.find();
-            req.session.articles=articles;
-            res.redirect('/dashboard');
+            res.redirect('/home');
         }else{
             res.render('login',{message:'Password does not match!'});
         }
@@ -72,7 +70,8 @@ try{
 const loadHome= async (req,res)=>{
 try{
     const articles=await Article.find();
-    res.render('home',{articles:articles,user:req.session.user});
+    req.session.articles=articles;
+    res.render('home',{articles:req.session.articles,user:req.session.user});
 }catch(err){
     console.log(err);
 }

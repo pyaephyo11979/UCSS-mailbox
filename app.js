@@ -18,7 +18,7 @@ app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Methods','*');
     next();
 })
-app.use('/', userRoute);
+app.use('/',userRoute)
 const http= require('http');
 const server = http.createServer(app);
 server.listen(port, () => console.log(`Listening on port ${port}`));

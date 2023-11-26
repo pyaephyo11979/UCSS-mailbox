@@ -9,6 +9,17 @@ user_route.use(bodyParser.json());
 user_route.use(bodyParser.urlencoded({ extended: true }));
 user_route.set('view engine', 'ejs');
 user_route.set('views', './views');
+user_route.set('trust proxy', 1);
+user_route.use(session({
+    cookie:{
+        secure:true,
+        maxAge: 60000
+    },
+    store: new session.MemoryStore(),
+    secret: SESSION_SECRET,
+    saveUninitialized:true,
+    resave:false
+}))
 user_route.use(express.static('public'));
 const multer = require('multer');
 const path = require('path');
@@ -26,6 +37,12 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const userController = require('../controllers/userController');
 const auth = require('../middlewares/auth');
+user_route.use((req, res, next) => {
+    if(!req.session){
+        res.redirect('/login');
+    }
+    next();
+})
 user_route.get('/register', userController.registerLoad);
 user_route.post('/register', userController.register);
 user_route.get('/login', auth.isLogout, userController.loginLoad);

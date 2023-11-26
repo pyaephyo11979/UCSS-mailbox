@@ -1,26 +1,8 @@
 <%- include('layouts/header.ejs') %>
 <%- include('layouts/nav.ejs') %>
-<%
-const hour=new Date().getHours();
-let greeting;
-if(hour>=0 && hour<12){
-    greeting="Good Morning";
-    color="yellow"
-}else if(hour>=12 && hour<16){
-    greeting="Good Afternoon";
-    color="orange"
-}else if(hour>=16 && hour<20){
-    greeting="Good Evening";
-    color="darkblue"
-}else{
-    greeting="Good Night";
-    color="black"
-}
-%>
 <style>
-    .gret{
-        color:<%= color%>; 
-        text-shadow: 2px 2px 4px #000000;
+    #gret{
+        text-shadow: 2px 2px 2px black;
     }
 </style>
 <div class="container-fluid">
@@ -28,7 +10,7 @@ if(hour>=0 && hour<12){
         <div class="d-none d-lg-block  col-lg-3">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title text-secondary"><span class="gret"  ><%= greeting %></span> <%= user.name %>!</h4>
+                    <h4 class="card-title text-secondary"><span id="gret"  ></span> <%= user.name %>!</h4>
                 </div>
             </div>
         </div>
@@ -78,9 +60,6 @@ if(hour>=0 && hour<12){
                         <% } %>
                         <div class="row">
                             <div class="col-6">
-                                <p class="card-text"><small class="text-muted">Category: <%= article.category %></small></p>
-                            </div>
-                            <div class="col-6">
                                 <p class="card-text"><small class="text-muted">Tag: <%= article.tag %></small></p>
                             </div>
                         </div>
@@ -90,29 +69,6 @@ if(hour>=0 && hour<12){
                             </div>
                             <div class="col-6">
                                 <p class="card-text"><small class="">Comments <%= article.comments %></small></p>
-                            </div>
-                        </div>
-                        <div class="row" id="cmtArea"> 
-                            <div class="row" id="cmts">
-                                <% if(article.comments.length>0){
-                                    article.comments.forEach((comment)=>{
-                                %>
-                                <div class="card">
-                                    <div class="card-body">
-                                        <p class="fs-4">
-                                            <%= comment.comment %>
-                                        </p>
-                                    </div>
-                                </div>
-                                <%})}%>
-                            </div>
-                            <div class="row">
-                                <form action="/comment" method="post" id="cmtForm" class="d-none">
-                                    <input type="hidden" name="articleID" value="<%= article._id %>">
-                                    <input type="hidden" name="userID" value="<%= user.StudentID %>">
-                                    <textarea name="comment" id="" cols="30" rows="2" class="form-control mt-2"></textarea>
-                                    <button type="submit" class="btn btn-primary mt-2">Comment</button>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -146,6 +102,29 @@ if(hour>=0 && hour<12){
     </div>
 </div>
 <script>
-
+const hour=new Date().getHours();
+let greeting;
+let greetingArea=document.querySelector("#gret")
+if(hour>=0 && hour<12){
+    greeting="Good Morning";
+    color="yellow"
+    greetingArea.style.color=color
+    greetingArea.innerHTML=greeting
+}else if(hour>=12 && hour<16){
+    greeting="Good Afternoon";
+    color="orange"
+    greetingArea.style.color=color
+    greetingArea.innerHTML=greeting
+}else if(hour>=16 && hour<20){
+    greeting="Good Evening";
+    color="darkblue"
+    greetingArea.style.color=color
+    greetingArea.innerHTML=greeting
+}else{
+    greeting="Good Night";
+    color="black"
+    greetingArea.style.color=color
+    greetingArea.innerHTML=greeting
+}
 </script>
 <%- include('layouts/footer.ejs') %>
