@@ -8,7 +8,7 @@ mongoose.connect('mongodb+srv://admin:Pyare132605@ucsbooks.t0qcvni.mongodb.net/U
 });
 mongoose.set('strictQuery', false);
 const port = process.env.PORT || 3000;
-const userRoute = require('./routes/userRoute');
+const userRoute = require('./routes/userRoute.js');
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
