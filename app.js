@@ -19,6 +19,4 @@ app.use((req,res,next)=>{
     next();
 })
 app.use('/',userRoute)
-const http= require('http');
-const server = http.Server(app);
-server.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));
